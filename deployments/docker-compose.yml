@@ -19,6 +19,7 @@ services:
     ports:
       - "3000:3000"
     environment:
+      ENV: production
       DB_HOST: db
       DB_NAME: mydb
       DB_USER: user
