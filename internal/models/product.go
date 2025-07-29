@@ -1,14 +1,9 @@
 package models
 
-import (
-	"gorm.io/gorm"
-)
-
 type Product struct {
-	gorm.Model
-	Name      string
-	Quantity  uint
-	UnitCoast uint
-	MeasureID uint
-	Measure   Measure
+	ID        uint   `gorm:"primaryKey;autoIncrement" json:"id"`
+	Name      string `json:"name"`
+	Quantity  uint   `json:"quantity"`
+	UnitCoast uint   `json:"unit_coast"`
+	MeasureID uint   `json:"measureID" gorm:"default:1"`
 }
