@@ -35,6 +35,5 @@ func Connect() *gorm.DB {
 
 	db.AutoMigrate(&models.Measure{}, &models.Product{})
 
-	fmt.Print("Штатно отработало")
 	return db
 }
