@@ -1,0 +1,310 @@
+definitions:
+  response.ErrorResponse:
+    properties:
+      error:
+        type: string
+    type: object
+  response.MeasureCreate:
+    properties:
+      name:
+        type: string
+    type: object
+  response.MeasureResponse:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  response.MeasureUpdate:
+    properties:
+      name:
+        type: string
+    type: object
+  response.ProductCreate:
+    properties:
+      measureID:
+        type: integer
+      name:
+        type: string
+      quantity:
+        type: integer
+      unit_coast:
+        type: integer
+    type: object
+  response.ProductResponse:
+    properties:
+      id:
+        type: integer
+      measureID:
+        type: integer
+      name:
+        type: string
+      quantity:
+        type: integer
+      unit_coast:
+        type: integer
+    type: object
+  response.ProductUpdate:
+    properties:
+      measureID:
+        type: integer
+      name:
+        type: string
+      quantity:
+        type: integer
+      unit_coast:
+        type: integer
+    type: object
+info:
+  contact: {}
+  title: Test API
+  version: "1.0"
+paths:
+  /measures:
+    get:
+      description: Возвращает список ед. измерения
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/response.MeasureResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить список ед. измерения
+      tags:
+      - Measure
+    post:
+      consumes:
+      - application/json
+      description: Создает ед. измерения в БД
+      parameters:
+      - description: Данные ед. измерения
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.MeasureCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.MeasureResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Создать ед. измерения
+      tags:
+      - Measure
+  /measures/{id}:
+    delete:
+      description: Удаляет единицу измерения из БД по ID
+      parameters:
+      - description: Measure ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: Ед. измерения успешна удалёна
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Удалить ед. измерения
+      tags:
+      - Measure
+    get:
+      description: Возвращает ед. измерения по ID
+      parameters:
+      - description: Measure ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.MeasureResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить ед. измерения по ID
+      tags:
+      - Measure
+    put:
+      consumes:
+      - application/json
+      description: Обновляет существующую ед. измерения по ID
+      parameters:
+      - description: Measure ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля ед. измерения
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.MeasureUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.MeasureResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Обновить ед. измерения
+      tags:
+      - Measure
+  /products:
+    get:
+      description: Возвращает список продуктов
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/response.ProductResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить список продуктов
+      tags:
+      - Products
+    post:
+      consumes:
+      - application/json
+      description: Создает продукт в БД
+      parameters:
+      - description: Данные продукта
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.ProductCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.ProductResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Создать продукт
+      tags:
+      - Products
+  /products/{id}:
+    delete:
+      description: Удаляет продукт из БД по ID
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: Продукт успешно удалён
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Удалить продукт
+      tags:
+      - Products
+    get:
+      description: Возвращает продукт по ID
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ProductResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить продукт по ID
+      tags:
+      - Products
+    put:
+      consumes:
+      - application/json
+      description: Обновляет существующий продукт по ID
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля продукта
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.ProductUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ProductResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Обновить продукт
+      tags:
+      - Products
+swagger: "2.0"
