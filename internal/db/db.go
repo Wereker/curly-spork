@@ -1,7 +1,10 @@
 package db
 
 import (
-	"app/internal/models"
+	catalog "app/internal/models/catalog"
+	order "app/internal/models/order"
+	sitecontent "app/internal/models/sitecontent"
+	user "app/internal/models/user"
 	"fmt"
 	"log"
 	"os"
@@ -33,7 +36,33 @@ func Connect() *gorm.DB {
 		panic("Не удалось подключиться к БД: " + err.Error())
 	}
 
-	db.AutoMigrate(&models.Measure{}, &models.Product{})
+	db.AutoMigrate(
+		&catalog.Category{},
+		&catalog.Manufacturer{},
+		&catalog.Attribute{},
+		&catalog.Product{},
+		&catalog.AttributeValue{},
+		&catalog.ProductImage{},
+		&catalog.ProductWarehouse{},
+
+		&order.Order{},
+		&order.OrderItem{},
+		&order.Payment{},
+		&order.PaymentMethod{},
+		&order.PaymentStatus{},
+		&order.Request{},
+		&order.RequestStatus{},
+		&order.Shipment{},
+		&order.ShipmentMethod{},
+		&order.ShipmentStatus{},
+
+		&user.Right{},
+		&user.User{},
+
+		&sitecontent.CommonBlock{},
+		&sitecontent.New{},
+		&sitecontent.Story{},
+	)
 
 	return db
 }
