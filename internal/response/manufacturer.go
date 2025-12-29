@@ -20,14 +20,14 @@ type ManufacturerShortResponse struct {
 }
 
 type ManufacturerCreate struct {
-	Slug        string `json:"slug" validate:"required,slug,min=2,max=100"`
+	Slug        string `json:"slug,omitempty" validate:"omitempty,slug,min=2,max=100"`
 	Title       string `json:"title" validate:"required,min=2,max=50"`
 	Country     string `json:"country,omitempty" validate:"omitempty,max=50"`
 	Description string `json:"description,omitempty"`
 }
 
 type ManufacturerUpdate struct {
-	Slug        string `json:"slug" validate:"required,slug,min=2,max=100"`
+	Slug        string `json:"slug" validate:"slug,min=2,max=100"`
 	Title       string `json:"title" validate:"required,min=2,max=50"`
 	Country     string `json:"country,omitempty" validate:"omitempty,max=50"`
 	Description string `json:"description,omitempty"`

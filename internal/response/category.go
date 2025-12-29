@@ -24,7 +24,7 @@ type CategoryShortResponse struct {
 }
 
 type CategoryCreate struct {
-	Slug        string `json:"slug" validate:"required,slug,min=2,max=100"`
+	Slug        string `json:"slug" validate:"omitempty,slug,min=2,max=100"`
 	Title       string `json:"title" validate:"required,min=2,max=50"`
 	Description string `json:"description,omitempty"`
 	ParentID    *uint  `json:"parent_id,omitempty"`
@@ -32,7 +32,7 @@ type CategoryCreate struct {
 }
 
 type CategoryUpdate struct {
-	Slug        string `json:"slug" validate:"required,slug,min=2,max=100"`
+	Slug        string `json:"slug" validate:"omitempty,slug,min=2,max=100"`
 	Title       string `json:"title" validate:"required,min=2,max=50"`
 	Description string `json:"description,omitempty"`
 	ParentID    *uint  `json:"parent_id,omitempty"`

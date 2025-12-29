@@ -12,12 +12,12 @@ type ProductWarehouseResponse struct {
 }
 
 type ProductWarehouseCreate struct {
-	Count     uint `json:"count" validate:"required,gte=0"`
+	Count     uint `json:"count" validate:"omitempty,gte=0"`
 	ProductID uint `json:"product_id" validate:"required"`
 }
 
 type ProductWarehouseUpdate struct {
-	Count     uint `json:"count" validate:"required,gte=0"`
+	Count     uint `json:"count" validate:"omitempty,gte=0"`
 	ProductID uint `json:"product_id" validate:"required"`
 }
 

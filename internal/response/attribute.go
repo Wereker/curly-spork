@@ -28,13 +28,13 @@ type AttributeValueShortResponse struct {
 }
 
 type AttributeCreate struct {
-	Slug          string               `json:"slug" validate:"required,slug,min=2,max=100"`
+	Slug          string               `json:"slug" validate:"omitempty,slug,min=2,max=100"`
 	Title         string               `json:"title" validate:"required,min=2,max=100"`
 	AttributeType models.AttributeType `json:"attribute_type" validate:"required,oneof=text number select multi_select"`
 }
 
 type AttributeUpdate struct {
-	Slug          string               `json:"slug" validate:"required,slug,min=2,max=100"`
+	Slug          string               `json:"slug" validate:"omitempty,slug,min=2,max=100"`
 	Title         string               `json:"title" validate:"required,min=2,max=100"`
 	AttributeType models.AttributeType `json:"attribute_type" validate:"required,oneof=text number select multi_select"`
 }
