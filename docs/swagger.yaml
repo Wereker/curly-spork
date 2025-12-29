@@ -1,174 +1,2151 @@
 definitions:
+  models.AttributeType:
+    enum:
+    - text
+    - number
+    - select
+    - multi_select
+    type: string
+    x-enum-varnames:
+    - AttributeTypeText
+    - AttributeTypeNumber
+    - AttributeTypeSelect
+    - AttributeTypeMultiSelect
+  response.AttributeCreate:
+    properties:
+      attribute_type:
+        allOf:
+        - $ref: '#/definitions/models.AttributeType'
+        enum:
+        - text
+        - number
+        - select
+        - multi_select
+      slug:
+        maxLength: 100
+        minLength: 2
+        type: string
+      title:
+        maxLength: 100
+        minLength: 2
+        type: string
+    required:
+    - attribute_type
+    - slug
+    - title
+    type: object
+  response.AttributeListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/response.AttributeResponse'
+        type: array
+      limit:
+        type: integer
+      page:
+        type: integer
+      total:
+        type: integer
+    type: object
+  response.AttributePatch:
+    properties:
+      attribute_type:
+        allOf:
+        - $ref: '#/definitions/models.AttributeType'
+        enum:
+        - text
+        - number
+        - select
+        - multi_select
+      slug:
+        maxLength: 100
+        minLength: 2
+        type: string
+      title:
+        maxLength: 100
+        minLength: 2
+        type: string
+    type: object
+  response.AttributeResponse:
+    properties:
+      attribute_type:
+        $ref: '#/definitions/models.AttributeType'
+      created_at:
+        type: string
+      id:
+        type: integer
+      slug:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+      values:
+        items:
+          $ref: '#/definitions/response.AttributeValueShortResponse'
+        type: array
+    type: object
+  response.AttributeShortResponse:
+    properties:
+      attribute_type:
+        $ref: '#/definitions/models.AttributeType'
+      id:
+        type: integer
+      slug:
+        type: string
+      title:
+        type: string
+    type: object
+  response.AttributeUpdate:
+    properties:
+      attribute_type:
+        allOf:
+        - $ref: '#/definitions/models.AttributeType'
+        enum:
+        - text
+        - number
+        - select
+        - multi_select
+      slug:
+        maxLength: 100
+        minLength: 2
+        type: string
+      title:
+        maxLength: 100
+        minLength: 2
+        type: string
+    required:
+    - attribute_type
+    - slug
+    - title
+    type: object
+  response.AttributeValueCreate:
+    properties:
+      attribute_id:
+        type: integer
+      product_id:
+        type: integer
+      value:
+        maxLength: 100
+        minLength: 1
+        type: string
+    required:
+    - attribute_id
+    - product_id
+    - value
+    type: object
+  response.AttributeValueListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/response.AttributeValueResponse'
+        type: array
+      limit:
+        type: integer
+      page:
+        type: integer
+      total:
+        type: integer
+    type: object
+  response.AttributeValuePatch:
+    properties:
+      attribute_id:
+        type: integer
+      product_id:
+        type: integer
+      value:
+        maxLength: 100
+        minLength: 1
+        type: string
+    type: object
+  response.AttributeValueResponse:
+    properties:
+      attribute:
+        $ref: '#/definitions/response.AttributeShortResponse'
+      attribute_id:
+        type: integer
+      created_at:
+        type: string
+      id:
+        type: integer
+      product:
+        $ref: '#/definitions/response.ProductShortResponse'
+      product_id:
+        type: integer
+      updated_at:
+        type: string
+      value:
+        type: string
+    type: object
+  response.AttributeValueShortResponse:
+    properties:
+      id:
+        type: integer
+      value:
+        type: string
+    type: object
+  response.AttributeValueUpdate:
+    properties:
+      attribute_id:
+        type: integer
+      product_id:
+        type: integer
+      value:
+        maxLength: 100
+        minLength: 1
+        type: string
+    required:
+    - attribute_id
+    - product_id
+    - value
+    type: object
+  response.CategoryCreate:
+    properties:
+      cover_url:
+        maxLength: 255
+        type: string
+      description:
+        type: string
+      parent_id:
+        type: integer
+      slug:
+        maxLength: 100
+        minLength: 2
+        type: string
+      title:
+        maxLength: 50
+        minLength: 2
+        type: string
+    required:
+    - slug
+    - title
+    type: object
+  response.CategoryListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/response.CategoryResponse'
+        type: array
+      limit:
+        type: integer
+      page:
+        type: integer
+      total:
+        type: integer
+    type: object
+  response.CategoryPatch:
+    properties:
+      cover_url:
+        maxLength: 255
+        type: string
+      description:
+        type: string
+      parent_id:
+        type: integer
+      slug:
+        maxLength: 100
+        minLength: 2
+        type: string
+      title:
+        maxLength: 50
+        minLength: 2
+        type: string
+    type: object
+  response.CategoryResponse:
+    properties:
+      children:
+        items:
+          $ref: '#/definitions/response.CategoryShortResponse'
+        type: array
+      cover_url:
+        type: string
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      parent:
+        $ref: '#/definitions/response.CategoryShortResponse'
+      parent_id:
+        type: integer
+      products_count:
+        type: integer
+      slug:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  response.CategoryShortResponse:
+    properties:
+      cover_url:
+        type: string
+      id:
+        type: integer
+      slug:
+        type: string
+      title:
+        type: string
+    type: object
+  response.CategoryTreeResponse:
+    properties:
+      children:
+        items:
+          $ref: '#/definitions/response.CategoryTreeResponse'
+        type: array
+      cover_url:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      slug:
+        type: string
+      title:
+        type: string
+    type: object
+  response.CategoryUpdate:
+    properties:
+      cover_url:
+        maxLength: 255
+        type: string
+      description:
+        type: string
+      parent_id:
+        type: integer
+      slug:
+        maxLength: 100
+        minLength: 2
+        type: string
+      title:
+        maxLength: 50
+        minLength: 2
+        type: string
+    required:
+    - slug
+    - title
+    type: object
+  response.CommonBlockCreate:
+    properties:
+      attribute_id:
+        type: integer
+      category_id:
+        type: integer
+      cover_url:
+        type: string
+      is_show:
+        type: boolean
+      manufacturer_id:
+        type: integer
+      title:
+        maxLength: 256
+        minLength: 2
+        type: string
+    required:
+    - title
+    type: object
+  response.CommonBlockListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/response.CommonBlockResponse'
+        type: array
+      limit:
+        type: integer
+      page:
+        type: integer
+      total:
+        type: integer
+    type: object
+  response.CommonBlockPatch:
+    properties:
+      attribute_id:
+        type: integer
+      category_id:
+        type: integer
+      cover_url:
+        type: string
+      is_show:
+        type: boolean
+      manufacturer_id:
+        type: integer
+      title:
+        maxLength: 256
+        minLength: 2
+        type: string
+    type: object
+  response.CommonBlockResponse:
+    properties:
+      attribute:
+        $ref: '#/definitions/response.AttributeShortResponse'
+      attribute_id:
+        type: integer
+      category:
+        $ref: '#/definitions/response.CategoryShortResponse'
+      category_id:
+        type: integer
+      cover_url:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: integer
+      is_show:
+        type: boolean
+      manufacturer:
+        $ref: '#/definitions/response.ManufacturerShortResponse'
+      manufacturer_id:
+        type: integer
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  response.CommonBlockUpdate:
+    properties:
+      attribute_id:
+        type: integer
+      category_id:
+        type: integer
+      cover_url:
+        type: string
+      is_show:
+        type: boolean
+      manufacturer_id:
+        type: integer
+      title:
+        maxLength: 256
+        minLength: 2
+        type: string
+    required:
+    - title
+    type: object
   response.ErrorResponse:
     properties:
       error:
         type: string
     type: object
-  response.MeasureCreate:
+  response.ManufacturerCreate:
     properties:
-      name:
+      country:
+        maxLength: 50
+        type: string
+      description:
+        type: string
+      slug:
+        maxLength: 100
+        minLength: 2
+        type: string
+      title:
+        maxLength: 50
+        minLength: 2
+        type: string
+    required:
+    - slug
+    - title
+    type: object
+  response.ManufacturerListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/response.ManufacturerResponse'
+        type: array
+      limit:
+        type: integer
+      page:
+        type: integer
+      total:
+        type: integer
+    type: object
+  response.ManufacturerPatch:
+    properties:
+      country:
+        maxLength: 50
+        type: string
+      description:
+        type: string
+      slug:
+        maxLength: 100
+        minLength: 2
+        type: string
+      title:
+        maxLength: 50
+        minLength: 2
         type: string
     type: object
-  response.MeasureResponse:
+  response.ManufacturerResponse:
+    properties:
+      country:
+        type: string
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      products_count:
+        type: integer
+      slug:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  response.ManufacturerShortResponse:
     properties:
       id:
         type: integer
-      name:
+      slug:
+        type: string
+      title:
         type: string
     type: object
-  response.MeasureUpdate:
+  response.ManufacturerUpdate:
     properties:
-      name:
+      country:
+        maxLength: 50
+        type: string
+      description:
+        type: string
+      slug:
+        maxLength: 100
+        minLength: 2
+        type: string
+      title:
+        maxLength: 50
+        minLength: 2
+        type: string
+    required:
+    - slug
+    - title
+    type: object
+  response.NewCreate:
+    properties:
+      cover_url:
+        maxLength: 128
+        type: string
+      is_show:
+        type: boolean
+      number:
+        minimum: 1
+        type: integer
+      subtitle:
+        maxLength: 256
+        minLength: 2
+        type: string
+      title:
+        maxLength: 128
+        minLength: 2
+        type: string
+    required:
+    - subtitle
+    - title
+    type: object
+  response.NewListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/response.NewResponse'
+        type: array
+      limit:
+        type: integer
+      page:
+        type: integer
+      total:
+        type: integer
+    type: object
+  response.NewPatch:
+    properties:
+      cover_url:
+        maxLength: 128
+        type: string
+      is_show:
+        type: boolean
+      number:
+        minimum: 1
+        type: integer
+      subtitle:
+        maxLength: 256
+        minLength: 2
+        type: string
+      title:
+        maxLength: 128
+        minLength: 2
+        type: string
+    type: object
+  response.NewResponse:
+    properties:
+      cover_url:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: integer
+      is_show:
+        type: boolean
+      number:
+        type: integer
+      subtitle:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  response.NewUpdate:
+    properties:
+      cover_url:
+        maxLength: 128
+        type: string
+      is_show:
+        type: boolean
+      number:
+        minimum: 1
+        type: integer
+      subtitle:
+        maxLength: 256
+        minLength: 2
+        type: string
+      title:
+        maxLength: 128
+        minLength: 2
+        type: string
+    required:
+    - subtitle
+    - title
+    type: object
+  response.OrderCreate:
+    properties:
+      discount:
+        minimum: 0
+        type: number
+      is_urgent:
+        type: boolean
+      order_status_id:
+        type: integer
+      payment_id:
+        type: integer
+      price:
+        minimum: 0
+        type: number
+      shipment_id:
+        type: integer
+      user_id:
+        type: integer
+    required:
+    - order_status_id
+    - payment_id
+    - price
+    - shipment_id
+    - user_id
+    type: object
+  response.OrderItemCreate:
+    properties:
+      order_id:
+        type: integer
+      product_id:
+        type: integer
+      quantity:
+        type: integer
+      unit_price:
+        type: number
+    required:
+    - order_id
+    - product_id
+    - quantity
+    - unit_price
+    type: object
+  response.OrderItemListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/response.OrderItemResponse'
+        type: array
+      limit:
+        type: integer
+      page:
+        type: integer
+      total:
+        type: integer
+    type: object
+  response.OrderItemPatch:
+    properties:
+      order_id:
+        type: integer
+      product_id:
+        type: integer
+      quantity:
+        type: integer
+      unit_price:
+        type: number
+    type: object
+  response.OrderItemResponse:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      order_id:
+        type: integer
+      product:
+        $ref: '#/definitions/response.ProductShortResponse'
+      product_id:
+        type: integer
+      quantity:
+        type: integer
+      total_price:
+        type: number
+      unit_price:
+        type: number
+      updated_at:
+        type: string
+    type: object
+  response.OrderItemUpdate:
+    properties:
+      order_id:
+        type: integer
+      product_id:
+        type: integer
+      quantity:
+        type: integer
+      unit_price:
+        type: number
+    required:
+    - order_id
+    - product_id
+    - quantity
+    - unit_price
+    type: object
+  response.OrderListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/response.OrderResponse'
+        type: array
+      limit:
+        type: integer
+      page:
+        type: integer
+      total:
+        type: integer
+    type: object
+  response.OrderPatch:
+    properties:
+      discount:
+        minimum: 0
+        type: number
+      is_urgent:
+        type: boolean
+      order_status_id:
+        type: integer
+      payment_id:
+        type: integer
+      price:
+        minimum: 0
+        type: number
+      shipment_id:
+        type: integer
+      user_id:
+        type: integer
+    type: object
+  response.OrderResponse:
+    properties:
+      created_at:
+        type: string
+      date:
+        type: string
+      discount:
+        type: number
+      id:
+        type: integer
+      is_urgent:
+        type: boolean
+      number:
+        type: string
+      order_items:
+        items:
+          $ref: '#/definitions/response.OrderItemResponse'
+        type: array
+      order_status:
+        $ref: '#/definitions/response.OrderStatusResponse'
+      order_status_id:
+        type: integer
+      payment:
+        $ref: '#/definitions/response.PaymentResponse'
+      payment_id:
+        type: integer
+      price:
+        type: number
+      request:
+        $ref: '#/definitions/response.RequestResponse'
+      shipment:
+        $ref: '#/definitions/response.ShipmentResponse'
+      shipment_id:
+        type: integer
+      total_amount:
+        type: number
+      updated_at:
+        type: string
+      user:
+        $ref: '#/definitions/response.UserResponse'
+      user_id:
+        type: integer
+    type: object
+  response.OrderShortResponse:
+    properties:
+      id:
+        type: integer
+      number:
+        type: string
+      price:
+        type: number
+    type: object
+  response.OrderStatusCreate:
+    properties:
+      background_color:
+        maxLength: 50
+        minLength: 2
+        type: string
+      title:
+        maxLength: 50
+        minLength: 2
+        type: string
+    required:
+    - background_color
+    - title
+    type: object
+  response.OrderStatusListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/response.OrderStatusResponse'
+        type: array
+      limit:
+        type: integer
+      page:
+        type: integer
+      total:
+        type: integer
+    type: object
+  response.OrderStatusPatch:
+    properties:
+      background_color:
+        maxLength: 50
+        minLength: 2
+        type: string
+      title:
+        maxLength: 50
+        minLength: 2
+        type: string
+    type: object
+  response.OrderStatusResponse:
+    properties:
+      background_color:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: integer
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  response.OrderStatusUpdate:
+    properties:
+      background_color:
+        maxLength: 50
+        minLength: 2
+        type: string
+      title:
+        maxLength: 50
+        minLength: 2
+        type: string
+    required:
+    - background_color
+    - title
+    type: object
+  response.OrderUpdate:
+    properties:
+      discount:
+        minimum: 0
+        type: number
+      is_urgent:
+        type: boolean
+      order_status_id:
+        type: integer
+      payment_id:
+        type: integer
+      price:
+        minimum: 0
+        type: number
+      shipment_id:
+        type: integer
+      user_id:
+        type: integer
+    required:
+    - order_status_id
+    - payment_id
+    - price
+    - shipment_id
+    - user_id
+    type: object
+  response.PaymentCreate:
+    properties:
+      payment_method_id:
+        type: integer
+      payment_status_id:
+        type: integer
+    required:
+    - payment_method_id
+    - payment_status_id
+    type: object
+  response.PaymentListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/response.PaymentResponse'
+        type: array
+      limit:
+        type: integer
+      page:
+        type: integer
+      total:
+        type: integer
+    type: object
+  response.PaymentMethodCreate:
+    properties:
+      description:
+        type: string
+      title:
+        maxLength: 50
+        minLength: 2
+        type: string
+    required:
+    - title
+    type: object
+  response.PaymentMethodListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/response.PaymentMethodResponse'
+        type: array
+      limit:
+        type: integer
+      page:
+        type: integer
+      total:
+        type: integer
+    type: object
+  response.PaymentMethodPatch:
+    properties:
+      description:
+        type: string
+      title:
+        maxLength: 50
+        minLength: 2
+        type: string
+    type: object
+  response.PaymentMethodResponse:
+    properties:
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  response.PaymentMethodUpdate:
+    properties:
+      description:
+        type: string
+      title:
+        maxLength: 50
+        minLength: 2
+        type: string
+    required:
+    - title
+    type: object
+  response.PaymentPatch:
+    properties:
+      payment_method_id:
+        type: integer
+      payment_status_id:
+        type: integer
+    type: object
+  response.PaymentResponse:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      payment_date:
+        type: string
+      payment_method:
+        $ref: '#/definitions/response.PaymentMethodResponse'
+      payment_method_id:
+        type: integer
+      payment_status:
+        $ref: '#/definitions/response.PaymentStatusResponse'
+      payment_status_id:
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  response.PaymentStatusCreate:
+    properties:
+      background_color:
+        maxLength: 50
+        minLength: 2
+        type: string
+      title:
+        maxLength: 50
+        minLength: 2
+        type: string
+    required:
+    - background_color
+    - title
+    type: object
+  response.PaymentStatusListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/response.PaymentStatusResponse'
+        type: array
+      limit:
+        type: integer
+      page:
+        type: integer
+      total:
+        type: integer
+    type: object
+  response.PaymentStatusPatch:
+    properties:
+      background_color:
+        maxLength: 50
+        minLength: 2
+        type: string
+      title:
+        maxLength: 50
+        minLength: 2
+        type: string
+    type: object
+  response.PaymentStatusResponse:
+    properties:
+      background_color:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: integer
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  response.PaymentStatusUpdate:
+    properties:
+      background_color:
+        maxLength: 50
+        minLength: 2
+        type: string
+      title:
+        maxLength: 50
+        minLength: 2
+        type: string
+    required:
+    - background_color
+    - title
+    type: object
+  response.PaymentUpdate:
+    properties:
+      payment_method_id:
+        type: integer
+      payment_status_id:
+        type: integer
+    required:
+    - payment_method_id
+    - payment_status_id
+    type: object
+  response.ProductAttributeResponse:
+    properties:
+      attribute_id:
+        type: integer
+      attribute_slug:
+        type: string
+      attribute_title:
+        type: string
+      attribute_type:
+        $ref: '#/definitions/models.AttributeType'
+      value:
         type: string
     type: object
   response.ProductCreate:
     properties:
-      measureID:
+      category_id:
         type: integer
-      name:
+      description:
         type: string
-      quantity:
+      discount:
+        maximum: 100
         type: integer
-      unit_coast:
+      manufacturer_id:
         type: integer
+      price:
+        type: number
+      short_description:
+        maxLength: 100
+        minLength: 2
+        type: string
+      slug:
+        maxLength: 100
+        minLength: 2
+        type: string
+      title:
+        maxLength: 100
+        minLength: 2
+        type: string
+    required:
+    - category_id
+    - manufacturer_id
+    - price
+    - short_description
+    - slug
+    - title
+    type: object
+  response.ProductImageCreate:
+    properties:
+      alt_text:
+        maxLength: 255
+        type: string
+      image_url:
+        maxLength: 255
+        type: string
+      is_main:
+        type: boolean
+      product_id:
+        type: integer
+    required:
+    - image_url
+    - product_id
+    type: object
+  response.ProductImageListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/response.ProductImageResponse'
+        type: array
+      limit:
+        type: integer
+      page:
+        type: integer
+      total:
+        type: integer
+    type: object
+  response.ProductImagePatch:
+    properties:
+      alt_text:
+        maxLength: 255
+        type: string
+      image_url:
+        maxLength: 255
+        type: string
+      is_main:
+        type: boolean
+      product_id:
+        type: integer
+    type: object
+  response.ProductImageResponse:
+    properties:
+      alt_text:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: integer
+      image_url:
+        type: string
+      is_main:
+        type: boolean
+      product:
+        $ref: '#/definitions/response.ProductShortResponse'
+      product_id:
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  response.ProductImageUpdate:
+    properties:
+      alt_text:
+        maxLength: 255
+        type: string
+      image_url:
+        maxLength: 255
+        type: string
+      is_main:
+        type: boolean
+      product_id:
+        type: integer
+    required:
+    - image_url
+    - product_id
+    type: object
+  response.ProductListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/response.ProductResponse'
+        type: array
+      limit:
+        type: integer
+      page:
+        type: integer
+      total:
+        type: integer
+    type: object
+  response.ProductPatch:
+    properties:
+      category_id:
+        type: integer
+      description:
+        type: string
+      discount:
+        maximum: 100
+        type: integer
+      manufacturer_id:
+        type: integer
+      price:
+        type: number
+      short_description:
+        maxLength: 100
+        minLength: 2
+        type: string
+      slug:
+        maxLength: 100
+        minLength: 2
+        type: string
+      title:
+        maxLength: 100
+        minLength: 2
+        type: string
     type: object
   response.ProductResponse:
     properties:
+      attributes:
+        items:
+          $ref: '#/definitions/response.ProductAttributeResponse'
+        type: array
+      category:
+        $ref: '#/definitions/response.CategoryShortResponse'
+      category_id:
+        type: integer
+      created_at:
+        type: string
+      description:
+        type: string
+      discount:
+        type: integer
+      discounted_price:
+        type: number
       id:
         type: integer
-      measureID:
+      images:
+        items:
+          $ref: '#/definitions/response.ProductImageResponse'
+        type: array
+      manufacturer:
+        $ref: '#/definitions/response.ManufacturerShortResponse'
+      manufacturer_id:
         type: integer
-      name:
+      price:
+        type: number
+      short_description:
         type: string
-      quantity:
+      slug:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+      warehouse:
+        $ref: '#/definitions/response.ProductWarehouseResponse'
+    type: object
+  response.ProductShortResponse:
+    properties:
+      id:
         type: integer
-      unit_coast:
-        type: integer
+      price:
+        type: number
+      slug:
+        type: string
+      title:
+        type: string
     type: object
   response.ProductUpdate:
     properties:
-      measureID:
+      category_id:
         type: integer
-      name:
+      description:
         type: string
-      quantity:
+      discount:
+        maximum: 100
         type: integer
-      unit_coast:
+      manufacturer_id:
         type: integer
+      price:
+        type: number
+      short_description:
+        maxLength: 100
+        minLength: 2
+        type: string
+      slug:
+        maxLength: 100
+        minLength: 2
+        type: string
+      title:
+        maxLength: 100
+        minLength: 2
+        type: string
+    required:
+    - category_id
+    - manufacturer_id
+    - price
+    - short_description
+    - slug
+    - title
+    type: object
+  response.ProductWarehouseCreate:
+    properties:
+      count:
+        minimum: 0
+        type: integer
+      product_id:
+        type: integer
+    required:
+    - count
+    - product_id
+    type: object
+  response.ProductWarehouseListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/response.ProductWarehouseResponse'
+        type: array
+      limit:
+        type: integer
+      page:
+        type: integer
+      total:
+        type: integer
+    type: object
+  response.ProductWarehousePatch:
+    properties:
+      count:
+        minimum: 0
+        type: integer
+      product_id:
+        type: integer
+    type: object
+  response.ProductWarehouseResponse:
+    properties:
+      count:
+        type: integer
+      created_at:
+        type: string
+      id:
+        type: integer
+      product:
+        $ref: '#/definitions/response.ProductShortResponse'
+      product_id:
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  response.ProductWarehouseUpdate:
+    properties:
+      count:
+        minimum: 0
+        type: integer
+      product_id:
+        type: integer
+    required:
+    - count
+    - product_id
+    type: object
+  response.RequestCreate:
+    properties:
+      manager_comment:
+        maxLength: 128
+        type: string
+      order_id:
+        type: integer
+      request_status_id:
+        type: integer
+      user_comment:
+        maxLength: 128
+        type: string
+      user_id:
+        type: integer
+    required:
+    - order_id
+    - request_status_id
+    - user_id
+    type: object
+  response.RequestListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/response.RequestResponse'
+        type: array
+      limit:
+        type: integer
+      page:
+        type: integer
+      total:
+        type: integer
+    type: object
+  response.RequestPatch:
+    properties:
+      manager_comment:
+        maxLength: 128
+        type: string
+      order_id:
+        type: integer
+      request_status_id:
+        type: integer
+      user_comment:
+        maxLength: 128
+        type: string
+      user_id:
+        type: integer
+    type: object
+  response.RequestResponse:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      manager_comment:
+        type: string
+      number:
+        type: string
+      order:
+        $ref: '#/definitions/response.OrderShortResponse'
+      order_id:
+        type: integer
+      request_status:
+        $ref: '#/definitions/response.RequestStatusResponse'
+      request_status_id:
+        type: integer
+      updated_at:
+        type: string
+      user:
+        $ref: '#/definitions/response.UserShortResponse'
+      user_comment:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  response.RequestStatusCreate:
+    properties:
+      background_color:
+        maxLength: 50
+        minLength: 2
+        type: string
+      title:
+        maxLength: 50
+        minLength: 2
+        type: string
+    required:
+    - background_color
+    - title
+    type: object
+  response.RequestStatusListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/response.RequestStatusResponse'
+        type: array
+      limit:
+        type: integer
+      page:
+        type: integer
+      total:
+        type: integer
+    type: object
+  response.RequestStatusPatch:
+    properties:
+      background_color:
+        maxLength: 50
+        minLength: 2
+        type: string
+      title:
+        maxLength: 50
+        minLength: 2
+        type: string
+    type: object
+  response.RequestStatusResponse:
+    properties:
+      background_color:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: integer
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  response.RequestStatusUpdate:
+    properties:
+      background_color:
+        maxLength: 50
+        minLength: 2
+        type: string
+      title:
+        maxLength: 50
+        minLength: 2
+        type: string
+    required:
+    - background_color
+    - title
+    type: object
+  response.RequestUpdate:
+    properties:
+      manager_comment:
+        maxLength: 128
+        type: string
+      order_id:
+        type: integer
+      request_status_id:
+        type: integer
+      user_comment:
+        maxLength: 128
+        type: string
+      user_id:
+        type: integer
+    required:
+    - order_id
+    - request_status_id
+    - user_id
+    type: object
+  response.RightCreate:
+    properties:
+      can_make_order:
+        type: boolean
+      can_manage_order:
+        type: boolean
+      can_manage_product:
+        type: boolean
+      can_manage_user:
+        type: boolean
+      can_view_catalog:
+        type: boolean
+      description:
+        type: string
+      title:
+        maxLength: 50
+        minLength: 2
+        type: string
+    required:
+    - title
+    type: object
+  response.RightListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/response.RightResponse'
+        type: array
+      limit:
+        type: integer
+      page:
+        type: integer
+      total:
+        type: integer
+    type: object
+  response.RightPatch:
+    properties:
+      can_make_order:
+        type: boolean
+      can_manage_order:
+        type: boolean
+      can_manage_product:
+        type: boolean
+      can_manage_user:
+        type: boolean
+      can_view_catalog:
+        type: boolean
+      description:
+        type: string
+      title:
+        maxLength: 50
+        minLength: 2
+        type: string
+    type: object
+  response.RightResponse:
+    properties:
+      can_make_order:
+        type: boolean
+      can_manage_order:
+        type: boolean
+      can_manage_product:
+        type: boolean
+      can_manage_user:
+        type: boolean
+      can_view_catalog:
+        type: boolean
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  response.RightUpdate:
+    properties:
+      can_make_order:
+        type: boolean
+      can_manage_order:
+        type: boolean
+      can_manage_product:
+        type: boolean
+      can_manage_user:
+        type: boolean
+      can_view_catalog:
+        type: boolean
+      description:
+        type: string
+      title:
+        maxLength: 50
+        minLength: 2
+        type: string
+    required:
+    - title
+    type: object
+  response.ShipmentCreate:
+    properties:
+      address:
+        type: string
+      price:
+        minimum: 0
+        type: number
+      shipment_method_id:
+        type: integer
+      shipment_status_id:
+        type: integer
+    required:
+    - shipment_method_id
+    - shipment_status_id
+    type: object
+  response.ShipmentListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/response.ShipmentResponse'
+        type: array
+      limit:
+        type: integer
+      page:
+        type: integer
+      total:
+        type: integer
+    type: object
+  response.ShipmentMethodCreate:
+    properties:
+      description:
+        type: string
+      title:
+        maxLength: 50
+        minLength: 2
+        type: string
+    required:
+    - title
+    type: object
+  response.ShipmentMethodListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/response.ShipmentMethodResponse'
+        type: array
+      limit:
+        type: integer
+      page:
+        type: integer
+      total:
+        type: integer
+    type: object
+  response.ShipmentMethodPatch:
+    properties:
+      description:
+        type: string
+      title:
+        maxLength: 50
+        minLength: 2
+        type: string
+    type: object
+  response.ShipmentMethodResponse:
+    properties:
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  response.ShipmentMethodUpdate:
+    properties:
+      description:
+        type: string
+      title:
+        maxLength: 50
+        minLength: 2
+        type: string
+    required:
+    - title
+    type: object
+  response.ShipmentPatch:
+    properties:
+      address:
+        type: string
+      price:
+        minimum: 0
+        type: number
+      shipment_method_id:
+        type: integer
+      shipment_status_id:
+        type: integer
+    type: object
+  response.ShipmentResponse:
+    properties:
+      address:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: integer
+      number:
+        type: string
+      price:
+        type: number
+      shipment_method:
+        $ref: '#/definitions/response.ShipmentMethodResponse'
+      shipment_method_id:
+        type: integer
+      shipment_status:
+        $ref: '#/definitions/response.ShipmentStatusResponse'
+      shipment_status_id:
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  response.ShipmentStatusCreate:
+    properties:
+      background_color:
+        maxLength: 50
+        minLength: 2
+        type: string
+      title:
+        maxLength: 50
+        minLength: 2
+        type: string
+    required:
+    - background_color
+    - title
+    type: object
+  response.ShipmentStatusListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/response.ShipmentStatusResponse'
+        type: array
+      limit:
+        type: integer
+      page:
+        type: integer
+      total:
+        type: integer
+    type: object
+  response.ShipmentStatusPatch:
+    properties:
+      background_color:
+        maxLength: 50
+        minLength: 2
+        type: string
+      title:
+        maxLength: 50
+        minLength: 2
+        type: string
+    type: object
+  response.ShipmentStatusResponse:
+    properties:
+      background_color:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: integer
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  response.ShipmentStatusUpdate:
+    properties:
+      background_color:
+        maxLength: 50
+        minLength: 2
+        type: string
+      title:
+        maxLength: 50
+        minLength: 2
+        type: string
+    required:
+    - background_color
+    - title
+    type: object
+  response.ShipmentUpdate:
+    properties:
+      address:
+        type: string
+      price:
+        minimum: 0
+        type: number
+      shipment_method_id:
+        type: integer
+      shipment_status_id:
+        type: integer
+    required:
+    - shipment_method_id
+    - shipment_status_id
+    type: object
+  response.StoryCreate:
+    properties:
+      cover_url:
+        maxLength: 128
+        type: string
+      is_show:
+        type: boolean
+      title:
+        maxLength: 256
+        minLength: 2
+        type: string
+    required:
+    - title
+    type: object
+  response.StoryListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/response.StoryResponse'
+        type: array
+      limit:
+        type: integer
+      page:
+        type: integer
+      total:
+        type: integer
+    type: object
+  response.StoryPatch:
+    properties:
+      cover_url:
+        maxLength: 128
+        type: string
+      is_show:
+        type: boolean
+      title:
+        maxLength: 256
+        minLength: 2
+        type: string
+    type: object
+  response.StoryResponse:
+    properties:
+      cover_url:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: integer
+      is_show:
+        type: boolean
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  response.StoryUpdate:
+    properties:
+      cover_url:
+        maxLength: 128
+        type: string
+      is_show:
+        type: boolean
+      title:
+        maxLength: 256
+        minLength: 2
+        type: string
+    required:
+    - title
+    type: object
+  response.UserCreate:
+    properties:
+      address:
+        type: string
+      email:
+        maxLength: 100
+        type: string
+      father_name:
+        maxLength: 100
+        type: string
+      first_name:
+        maxLength: 100
+        type: string
+      last_name:
+        maxLength: 100
+        type: string
+      password:
+        minLength: 6
+        type: string
+      phone:
+        maxLength: 100
+        type: string
+      right_id:
+        type: integer
+      username:
+        maxLength: 150
+        minLength: 3
+        type: string
+    required:
+    - email
+    - password
+    - right_id
+    - username
+    type: object
+  response.UserListResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/response.UserResponse'
+        type: array
+      limit:
+        type: integer
+      page:
+        type: integer
+      total:
+        type: integer
+    type: object
+  response.UserPasswordUpdate:
+    properties:
+      new_password:
+        minLength: 6
+        type: string
+      old_password:
+        type: string
+    required:
+    - new_password
+    - old_password
+    type: object
+  response.UserPatch:
+    properties:
+      address:
+        type: string
+      email:
+        maxLength: 100
+        type: string
+      father_name:
+        maxLength: 100
+        type: string
+      first_name:
+        maxLength: 100
+        type: string
+      last_name:
+        maxLength: 100
+        type: string
+      phone:
+        maxLength: 100
+        type: string
+      right_id:
+        type: integer
+      username:
+        maxLength: 150
+        minLength: 3
+        type: string
+    type: object
+  response.UserResponse:
+    properties:
+      address:
+        type: string
+      created_at:
+        type: string
+      email:
+        type: string
+      father_name:
+        type: string
+      first_name:
+        type: string
+      id:
+        type: integer
+      last_name:
+        type: string
+      phone:
+        type: string
+      registration_date:
+        type: string
+      right:
+        $ref: '#/definitions/response.RightResponse'
+      right_id:
+        type: integer
+      updated_at:
+        type: string
+      username:
+        type: string
+    type: object
+  response.UserShortResponse:
+    properties:
+      email:
+        type: string
+      id:
+        type: integer
+      username:
+        type: string
+    type: object
+  response.UserUpdate:
+    properties:
+      address:
+        type: string
+      email:
+        maxLength: 100
+        type: string
+      father_name:
+        maxLength: 100
+        type: string
+      first_name:
+        maxLength: 100
+        type: string
+      last_name:
+        maxLength: 100
+        type: string
+      phone:
+        maxLength: 100
+        type: string
+      right_id:
+        type: integer
+      username:
+        maxLength: 150
+        minLength: 3
+        type: string
+    required:
+    - email
+    - right_id
+    - username
     type: object
 info:
   contact: {}
   title: Test API
   version: "1.0"
 paths:
-  /measures:
+  /attribute-values:
     get:
-      description: Возвращает список ед. измерения
+      description: Возвращает список всех значений атрибутов с пагинацией
+      parameters:
+      - default: 1
+        description: Номер страницы
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Лимит на страницу
+        in: query
+        name: limit
+        type: integer
+      - description: Фильтр по товару
+        in: query
+        name: product_id
+        type: integer
+      - description: Фильтр по атрибуту
+        in: query
+        name: attribute_id
+        type: integer
+      - description: Поиск по значению
+        in: query
+        name: search
+        type: string
       responses:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/response.MeasureResponse'
-            type: array
+            $ref: '#/definitions/response.AttributeValueListResponse'
         "500":
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.ErrorResponse'
-      summary: Получить список ед. измерения
+      summary: Получить список значений атрибутов
       tags:
-      - Measure
+      - AttributeValue
     post:
       consumes:
       - application/json
-      description: Создает ед. измерения в БД
+      description: Создает новое значение атрибута
       parameters:
-      - description: Данные ед. измерения
+      - description: Данные для создания значения атрибута
         in: body
         name: data
         required: true
         schema:
-          $ref: '#/definitions/response.MeasureCreate'
+          $ref: '#/definitions/response.AttributeValueCreate'
       produces:
       - application/json
       responses:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/response.MeasureResponse'
+            $ref: '#/definitions/response.AttributeValueResponse'
         "400":
           description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
           schema:
             $ref: '#/definitions/response.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.ErrorResponse'
-      summary: Создать ед. измерения
+      summary: Создать значение атрибута
       tags:
-      - Measure
-  /measures/{id}:
+      - AttributeValue
+  /attribute-values/{id}:
     delete:
-      description: Удаляет единицу измерения из БД по ID
+      description: Удаляет значение атрибута из БД по ID
       parameters:
-      - description: Measure ID
+      - description: AttributeValue ID
         in: path
         name: id
         required: true
         type: integer
       responses:
         "204":
-          description: Ед. измерения успешна удалёна
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/response.ErrorResponse'
-      summary: Удалить ед. измерения
-      tags:
-      - Measure
-    get:
-      description: Возвращает ед. измерения по ID
-      parameters:
-      - description: Measure ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/response.MeasureResponse'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/response.ErrorResponse'
-      summary: Получить ед. измерения по ID
-      tags:
-      - Measure
-    put:
-      consumes:
-      - application/json
-      description: Обновляет существующую ед. измерения по ID
-      parameters:
-      - description: Measure ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      - description: Обновляемые поля ед. измерения
-        in: body
-        name: data
-        required: true
-        schema:
-          $ref: '#/definitions/response.MeasureUpdate'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/response.MeasureResponse'
+          description: Значение атрибута успешно удалено
         "400":
           description: Bad Request
           schema:
@@ -181,32 +2158,3053 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.ErrorResponse'
-      summary: Обновить ед. измерения
+      summary: Удалить значение атрибута
       tags:
-      - Measure
-  /products:
+      - AttributeValue
     get:
-      description: Возвращает список продуктов
+      description: Возвращает значение атрибута по ID
+      parameters:
+      - description: AttributeValue ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.AttributeValueResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить значение атрибута по ID
+      tags:
+      - AttributeValue
+    patch:
+      consumes:
+      - application/json
+      description: Обновляет указанные поля значения атрибута по ID (PATCH)
+      parameters:
+      - description: AttributeValue ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля значения атрибута
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.AttributeValuePatch'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.AttributeValueResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Частично обновить значение атрибута
+      tags:
+      - AttributeValue
+    put:
+      consumes:
+      - application/json
+      description: Обновляет все поля значения атрибута по ID (PUT)
+      parameters:
+      - description: AttributeValue ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля значения атрибута
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.AttributeValueUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.AttributeValueResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Полностью обновить значение атрибута
+      tags:
+      - AttributeValue
+  /attributes:
+    get:
+      description: Возвращает список всех атрибутов с пагинацией
+      parameters:
+      - default: 1
+        description: Номер страницы
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Лимит на страницу
+        in: query
+        name: limit
+        type: integer
+      - description: Поиск по названию или slug
+        in: query
+        name: search
+        type: string
+      - description: Фильтр по типу атрибута
+        in: query
+        name: attribute_type
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.AttributeListResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить список атрибутов
+      tags:
+      - Attribute
+    post:
+      consumes:
+      - application/json
+      description: Создает новый атрибут
+      parameters:
+      - description: Данные для создания атрибута
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.AttributeCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.AttributeResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Создать атрибут
+      tags:
+      - Attribute
+  /attributes/{id}:
+    delete:
+      description: Удаляет атрибут из БД по ID
+      parameters:
+      - description: Attribute ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: Атрибут успешно удален
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Удалить атрибут
+      tags:
+      - Attribute
+    get:
+      description: Возвращает атрибут по ID
+      parameters:
+      - description: Attribute ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.AttributeResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить атрибут по ID
+      tags:
+      - Attribute
+    patch:
+      consumes:
+      - application/json
+      description: Обновляет указанные поля атрибута по ID (PATCH)
+      parameters:
+      - description: Attribute ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля атрибута
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.AttributePatch'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.AttributeResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Частично обновить атрибут
+      tags:
+      - Attribute
+    put:
+      consumes:
+      - application/json
+      description: Обновляет все поля атрибута по ID (PUT)
+      parameters:
+      - description: Attribute ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля атрибута
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.AttributeUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.AttributeResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Полностью обновить атрибут
+      tags:
+      - Attribute
+  /attributes/slug/{slug}:
+    get:
+      description: Возвращает атрибут по slug
+      parameters:
+      - description: Attribute Slug
+        in: path
+        name: slug
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.AttributeResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить атрибут по slug
+      tags:
+      - Attribute
+  /categories:
+    get:
+      description: Возвращает список всех категорий с пагинацией
+      parameters:
+      - default: 1
+        description: Номер страницы
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Лимит на страницу
+        in: query
+        name: limit
+        type: integer
+      - description: Поиск по названию или slug
+        in: query
+        name: search
+        type: string
+      - description: Фильтр по родительской категории
+        in: query
+        name: parent_id
+        type: integer
+      - default: false
+        description: Только корневые категории
+        in: query
+        name: only_root
+        type: boolean
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.CategoryListResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить список категорий
+      tags:
+      - Category
+    post:
+      consumes:
+      - application/json
+      description: Создает новую категорию
+      parameters:
+      - description: Данные для создания категории
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.CategoryCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.CategoryResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Создать категорию
+      tags:
+      - Category
+  /categories/{id}:
+    delete:
+      description: Удаляет категорию из БД по ID
+      parameters:
+      - description: Category ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: Категория успешно удалена
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Удалить категорию
+      tags:
+      - Category
+    get:
+      description: Возвращает категорию по ID
+      parameters:
+      - description: Category ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.CategoryResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить категорию по ID
+      tags:
+      - Category
+    patch:
+      consumes:
+      - application/json
+      description: Обновляет указанные поля категории по ID (PATCH)
+      parameters:
+      - description: Category ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля категории
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.CategoryPatch'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.CategoryResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Частично обновить категорию
+      tags:
+      - Category
+    put:
+      consumes:
+      - application/json
+      description: Обновляет все поля категории по ID (PUT)
+      parameters:
+      - description: Category ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля категории
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.CategoryUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.CategoryResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Полностью обновить категорию
+      tags:
+      - Category
+  /categories/slug/{slug}:
+    get:
+      description: Возвращает категорию по slug
+      parameters:
+      - description: Category Slug
+        in: path
+        name: slug
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.CategoryResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить категорию по slug
+      tags:
+      - Category
+  /categories/tree:
+    get:
+      description: Возвращает дерево всех категорий
       responses:
         "200":
           description: OK
           schema:
             items:
-              $ref: '#/definitions/response.ProductResponse'
+              $ref: '#/definitions/response.CategoryTreeResponse'
             type: array
         "500":
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.ErrorResponse'
-      summary: Получить список продуктов
+      summary: Получить дерево категорий
       tags:
-      - Products
+      - Category
+  /common-blocks:
+    get:
+      description: Возвращает список всех общих блоков с пагинацией
+      parameters:
+      - default: 1
+        description: Номер страницы
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Лимит на страницу
+        in: query
+        name: limit
+        type: integer
+      - description: Поиск по названию
+        in: query
+        name: search
+        type: string
+      - default: true
+        description: Фильтр по отображению
+        in: query
+        name: is_show
+        type: boolean
+      - description: Фильтр по категории
+        in: query
+        name: category_id
+        type: integer
+      - description: Фильтр по производителю
+        in: query
+        name: manufacturer_id
+        type: integer
+      - description: Фильтр по атрибуту
+        in: query
+        name: attribute_id
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.CommonBlockListResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить список общих блоков
+      tags:
+      - CommonBlock
     post:
       consumes:
       - application/json
-      description: Создает продукт в БД
+      description: Создает новый общий блок
       parameters:
-      - description: Данные продукта
+      - description: Данные для создания общего блока
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.CommonBlockCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.CommonBlockResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Создать общий блок
+      tags:
+      - CommonBlock
+  /common-blocks/{id}:
+    delete:
+      description: Удаляет общий блок из БД по ID
+      parameters:
+      - description: CommonBlock ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: Общий блок успешно удален
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Удалить общий блок
+      tags:
+      - CommonBlock
+    get:
+      description: Возвращает общий блок по ID
+      parameters:
+      - description: CommonBlock ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.CommonBlockResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить общий блок по ID
+      tags:
+      - CommonBlock
+    patch:
+      consumes:
+      - application/json
+      description: Обновляет указанные поля общего блока по ID (PATCH)
+      parameters:
+      - description: CommonBlock ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля общего блока
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.CommonBlockPatch'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.CommonBlockResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Частично обновить общий блок
+      tags:
+      - CommonBlock
+    put:
+      consumes:
+      - application/json
+      description: Обновляет все поля общего блока по ID (PUT)
+      parameters:
+      - description: CommonBlock ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля общего блока
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.CommonBlockUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.CommonBlockResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Полностью обновить общий блок
+      tags:
+      - CommonBlock
+  /common-blocks/{id}/toggle-visibility:
+    patch:
+      description: Переключает видимость общего блока (is_show)
+      parameters:
+      - description: CommonBlock ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.CommonBlockResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Переключить видимость общего блока
+      tags:
+      - CommonBlock
+  /manufacturers:
+    get:
+      description: Возвращает список всех производителей с пагинацией
+      parameters:
+      - default: 1
+        description: Номер страницы
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Лимит на страницу
+        in: query
+        name: limit
+        type: integer
+      - description: Поиск по названию, slug или стране
+        in: query
+        name: search
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ManufacturerListResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить список производителей
+      tags:
+      - Manufacturer
+    post:
+      consumes:
+      - application/json
+      description: Создает нового производителя
+      parameters:
+      - description: Данные для создания производителя
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.ManufacturerCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.ManufacturerResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Создать производителя
+      tags:
+      - Manufacturer
+  /manufacturers/{id}:
+    delete:
+      description: Удаляет производителя из БД по ID
+      parameters:
+      - description: Manufacturer ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: Производитель успешно удален
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Удалить производителя
+      tags:
+      - Manufacturer
+    get:
+      description: Возвращает производителя по ID
+      parameters:
+      - description: Manufacturer ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ManufacturerResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить производителя по ID
+      tags:
+      - Manufacturer
+    patch:
+      consumes:
+      - application/json
+      description: Обновляет указанные поля производителя по ID (PATCH)
+      parameters:
+      - description: Manufacturer ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля производителя
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.ManufacturerPatch'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ManufacturerResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Частично обновить производителя
+      tags:
+      - Manufacturer
+    put:
+      consumes:
+      - application/json
+      description: Обновляет все поля производителя по ID (PUT)
+      parameters:
+      - description: Manufacturer ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля производителя
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.ManufacturerUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ManufacturerResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Полностью обновить производителя
+      tags:
+      - Manufacturer
+  /manufacturers/slug/{slug}:
+    get:
+      description: Возвращает производителя по slug
+      parameters:
+      - description: Manufacturer Slug
+        in: path
+        name: slug
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ManufacturerResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить производителя по slug
+      tags:
+      - Manufacturer
+  /news:
+    get:
+      description: Возвращает список всех новостей с пагинацией
+      parameters:
+      - default: 1
+        description: Номер страницы
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Лимит на страницу
+        in: query
+        name: limit
+        type: integer
+      - description: Поиск по заголовку или подзаголовку
+        in: query
+        name: search
+        type: string
+      - default: true
+        description: Фильтр по отображению
+        in: query
+        name: is_show
+        type: boolean
+      - default: created_at
+        description: Сортировка (created_at, number, title)
+        in: query
+        name: sort_by
+        type: string
+      - default: desc
+        description: Порядок сортировки (asc, desc)
+        in: query
+        name: sort_order
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.NewListResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить список новостей
+      tags:
+      - New
+    post:
+      consumes:
+      - application/json
+      description: Создает новую новость
+      parameters:
+      - description: Данные для создания новости
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.NewCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.NewResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Создать новость
+      tags:
+      - New
+  /news/{id}:
+    delete:
+      description: Удаляет новость из БД по ID
+      parameters:
+      - description: New ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: Новость успешно удалена
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Удалить новость
+      tags:
+      - New
+    get:
+      description: Возвращает новость по ID
+      parameters:
+      - description: New ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.NewResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить новость по ID
+      tags:
+      - New
+    patch:
+      consumes:
+      - application/json
+      description: Обновляет указанные поля новости по ID (PATCH)
+      parameters:
+      - description: New ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля новости
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.NewPatch'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.NewResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Частично обновить новость
+      tags:
+      - New
+    put:
+      consumes:
+      - application/json
+      description: Обновляет все поля новости по ID (PUT)
+      parameters:
+      - description: New ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля новости
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.NewUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.NewResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Полностью обновить новость
+      tags:
+      - New
+  /news/{id}/toggle-visibility:
+    patch:
+      description: Переключает видимость новости (is_show)
+      parameters:
+      - description: New ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.NewResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Переключить видимость новости
+      tags:
+      - New
+  /order-items:
+    get:
+      description: Возвращает список всех товаров в заказах
+      parameters:
+      - default: 1
+        description: Номер страницы
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Лимит на страницу
+        in: query
+        name: limit
+        type: integer
+      - description: Фильтр по заказу
+        in: query
+        name: order_id
+        type: integer
+      - description: Фильтр по товару
+        in: query
+        name: product_id
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.OrderItemListResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить список товаров в заказах
+      tags:
+      - OrderItem
+    post:
+      consumes:
+      - application/json
+      description: Создает новый товар в заказе
+      parameters:
+      - description: Данные для создания товара в заказе
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.OrderItemCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.OrderItemResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Создать товар в заказе
+      tags:
+      - OrderItem
+  /order-items/{id}:
+    delete:
+      description: Удаляет товар в заказе из БД по ID
+      parameters:
+      - description: OrderItem ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: Товар в заказе успешно удален
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Удалить товар в заказе
+      tags:
+      - OrderItem
+    get:
+      description: Возвращает товар в заказе по ID
+      parameters:
+      - description: OrderItem ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.OrderItemResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить товар в заказе по ID
+      tags:
+      - OrderItem
+    patch:
+      consumes:
+      - application/json
+      description: Обновляет указанные поля товара в заказе по ID (PATCH)
+      parameters:
+      - description: OrderItem ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля товара в заказе
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.OrderItemPatch'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.OrderItemResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Частично обновить товар в заказе
+      tags:
+      - OrderItem
+    put:
+      consumes:
+      - application/json
+      description: Обновляет все поля товара в заказе по ID (PUT)
+      parameters:
+      - description: OrderItem ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля товара в заказе
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.OrderItemUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.OrderItemResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Полностью обновить товар в заказе
+      tags:
+      - OrderItem
+  /order-statuses:
+    get:
+      description: Возвращает список всех статусов заказов
+      parameters:
+      - default: 1
+        description: Номер страницы
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Лимит на страницу
+        in: query
+        name: limit
+        type: integer
+      - description: Поиск по названию
+        in: query
+        name: search
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.OrderStatusListResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить список статусов заказов
+      tags:
+      - OrderStatus
+    post:
+      consumes:
+      - application/json
+      description: Создает новый статус заказа
+      parameters:
+      - description: Данные для создания статуса заказа
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.OrderStatusCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.OrderStatusResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Создать статус заказа
+      tags:
+      - OrderStatus
+  /order-statuses/{id}:
+    delete:
+      description: Удаляет статус заказа из БД по ID
+      parameters:
+      - description: OrderStatus ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: Статус заказа успешно удалён
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Удалить статус заказа
+      tags:
+      - OrderStatus
+    get:
+      description: Возвращает статус заказа по ID
+      parameters:
+      - description: OrderStatus ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.OrderStatusResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить статус заказа по ID
+      tags:
+      - OrderStatus
+    patch:
+      consumes:
+      - application/json
+      description: Обновляет указанные поля статуса заказа по ID (PATCH)
+      parameters:
+      - description: OrderStatus ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля статуса заказа
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.OrderStatusPatch'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.OrderStatusResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Частично обновить статус заказа
+      tags:
+      - OrderStatus
+    put:
+      consumes:
+      - application/json
+      description: Обновляет все поля статуса заказа по ID (PUT)
+      parameters:
+      - description: OrderStatus ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля статуса заказа
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.OrderStatusUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.OrderStatusResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Полностью обновить статус заказа
+      tags:
+      - OrderStatus
+  /orders:
+    get:
+      description: Возвращает список всех заказов
+      parameters:
+      - default: 1
+        description: Номер страницы
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Лимит на страницу
+        in: query
+        name: limit
+        type: integer
+      - description: Поиск по номеру
+        in: query
+        name: number
+        type: string
+      - description: Фильтр по пользователю
+        in: query
+        name: user_id
+        type: integer
+      - description: Фильтр по статусу заказа
+        in: query
+        name: order_status_id
+        type: integer
+      - description: Фильтр по срочности
+        in: query
+        name: is_urgent
+        type: boolean
+      - description: Дата начала (YYYY-MM-DD)
+        in: query
+        name: start_date
+        type: string
+      - description: Дата окончания (YYYY-MM-DD)
+        in: query
+        name: end_date
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.OrderListResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить список заказов
+      tags:
+      - Order
+    post:
+      consumes:
+      - application/json
+      description: Создает новый заказ
+      parameters:
+      - description: Данные для создания заказа
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.OrderCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.OrderResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Создать заказ
+      tags:
+      - Order
+  /orders/{id}:
+    delete:
+      description: Удаляет заказ из БД по ID
+      parameters:
+      - description: Order ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: Заказ успешно удален
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Удалить заказ
+      tags:
+      - Order
+    get:
+      description: Возвращает заказ по ID
+      parameters:
+      - description: Order ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.OrderResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить заказ по ID
+      tags:
+      - Order
+    patch:
+      consumes:
+      - application/json
+      description: Обновляет указанные поля заказа по ID (PATCH)
+      parameters:
+      - description: Order ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля заказа
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.OrderPatch'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.OrderResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Частично обновить заказ
+      tags:
+      - Order
+    put:
+      consumes:
+      - application/json
+      description: Обновляет все поля заказа по ID (PUT)
+      parameters:
+      - description: Order ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля заказа
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.OrderUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.OrderResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Полностью обновить заказ
+      tags:
+      - Order
+  /payment-methods:
+    get:
+      description: Возвращает список всех способов оплаты
+      parameters:
+      - default: 1
+        description: Номер страницы
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Лимит на страницу
+        in: query
+        name: limit
+        type: integer
+      - description: Поиск по названию
+        in: query
+        name: search
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.PaymentMethodListResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить список способов оплаты
+      tags:
+      - PaymentMethod
+    post:
+      consumes:
+      - application/json
+      description: Создает новый способ оплаты
+      parameters:
+      - description: Данные для создания способа оплаты
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.PaymentMethodCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.PaymentMethodResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Создать способ оплаты
+      tags:
+      - PaymentMethod
+  /payment-methods/{id}:
+    delete:
+      description: Удаляет способ оплаты из БД по ID
+      parameters:
+      - description: PaymentMethod ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: Способ оплаты успешно удалён
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Удалить способ оплаты
+      tags:
+      - PaymentMethod
+    get:
+      description: Возвращает способ оплаты по ID
+      parameters:
+      - description: PaymentMethod ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.PaymentMethodResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить способ оплаты по ID
+      tags:
+      - PaymentMethod
+    patch:
+      consumes:
+      - application/json
+      description: Обновляет указанные поля способа оплаты по ID (PATCH)
+      parameters:
+      - description: PaymentMethod ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля способа оплаты
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.PaymentMethodPatch'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.PaymentMethodResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Частично обновить способ оплаты
+      tags:
+      - PaymentMethod
+    put:
+      consumes:
+      - application/json
+      description: Обновляет все поля способа оплаты по ID (PUT)
+      parameters:
+      - description: PaymentMethod ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля способа оплаты
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.PaymentMethodUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.PaymentMethodResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Полностью обновить способ оплаты
+      tags:
+      - PaymentMethod
+  /payment-statuses:
+    get:
+      description: Возвращает список всех статусов оплаты
+      parameters:
+      - default: 1
+        description: Номер страницы
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Лимит на страницу
+        in: query
+        name: limit
+        type: integer
+      - description: Поиск по названию
+        in: query
+        name: search
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.PaymentStatusListResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить список статусов оплаты
+      tags:
+      - PaymentStatus
+    post:
+      consumes:
+      - application/json
+      description: Создает новый статус оплаты
+      parameters:
+      - description: Данные для создания статуса оплаты
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.PaymentStatusCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.PaymentStatusResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Создать статус оплаты
+      tags:
+      - PaymentStatus
+  /payment-statuses/{id}:
+    delete:
+      description: Удаляет статус оплаты из БД по ID
+      parameters:
+      - description: PaymentStatus ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: Статус оплаты успешно удалён
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Удалить статус оплаты
+      tags:
+      - PaymentStatus
+    get:
+      description: Возвращает статус оплаты по ID
+      parameters:
+      - description: PaymentStatus ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.PaymentStatusResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить статус оплаты по ID
+      tags:
+      - PaymentStatus
+    patch:
+      consumes:
+      - application/json
+      description: Обновляет указанные поля статуса оплаты по ID (PATCH)
+      parameters:
+      - description: PaymentStatus ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля статуса оплаты
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.PaymentStatusPatch'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.PaymentStatusResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Частично обновить статус оплаты
+      tags:
+      - PaymentStatus
+    put:
+      consumes:
+      - application/json
+      description: Обновляет все поля статуса оплаты по ID (PUT)
+      parameters:
+      - description: PaymentStatus ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля статуса оплаты
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.PaymentStatusUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.PaymentStatusResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Полностью обновить статус оплаты
+      tags:
+      - PaymentStatus
+  /payments:
+    get:
+      description: Возвращает список всех оплат
+      parameters:
+      - default: 1
+        description: Номер страницы
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Лимит на страницу
+        in: query
+        name: limit
+        type: integer
+      - description: Фильтр по способу оплаты
+        in: query
+        name: payment_method_id
+        type: integer
+      - description: Фильтр по статусу оплаты
+        in: query
+        name: payment_status_id
+        type: integer
+      - description: Дата начала (YYYY-MM-DD)
+        in: query
+        name: start_date
+        type: string
+      - description: Дата окончания (YYYY-MM-DD)
+        in: query
+        name: end_date
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.PaymentListResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить список оплат
+      tags:
+      - Payment
+    post:
+      consumes:
+      - application/json
+      description: Создает новую оплату
+      parameters:
+      - description: Данные для создания оплаты
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.PaymentCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.PaymentResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Создать оплату
+      tags:
+      - Payment
+  /payments/{id}:
+    delete:
+      description: Удаляет оплату из БД по ID
+      parameters:
+      - description: Payment ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: Оплата успешно удалена
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Удалить оплату
+      tags:
+      - Payment
+    get:
+      description: Возвращает оплату по ID
+      parameters:
+      - description: Payment ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.PaymentResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить оплату по ID
+      tags:
+      - Payment
+    patch:
+      consumes:
+      - application/json
+      description: Обновляет указанные поля оплаты по ID (PATCH)
+      parameters:
+      - description: Payment ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля оплаты
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.PaymentPatch'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.PaymentResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Частично обновить оплату
+      tags:
+      - Payment
+    put:
+      consumes:
+      - application/json
+      description: Обновляет все поля оплаты по ID (PUT)
+      parameters:
+      - description: Payment ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля оплаты
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.PaymentUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.PaymentResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Полностью обновить оплату
+      tags:
+      - Payment
+  /product-images:
+    get:
+      description: Возвращает список всех изображений товаров с пагинацией
+      parameters:
+      - default: 1
+        description: Номер страницы
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Лимит на страницу
+        in: query
+        name: limit
+        type: integer
+      - description: Фильтр по товару
+        in: query
+        name: product_id
+        type: integer
+      - description: Фильтр по главному изображению
+        in: query
+        name: is_main
+        type: boolean
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ProductImageListResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить список изображений товаров
+      tags:
+      - ProductImage
+    post:
+      consumes:
+      - application/json
+      description: Создает новое изображение товара
+      parameters:
+      - description: Данные для создания изображения товара
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.ProductImageCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.ProductImageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Создать изображение товара
+      tags:
+      - ProductImage
+  /product-images/{id}:
+    delete:
+      description: Удаляет изображение товара из БД по ID
+      parameters:
+      - description: ProductImage ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: Изображение товара успешно удалено
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Удалить изображение товара
+      tags:
+      - ProductImage
+    get:
+      description: Возвращает изображение товара по ID
+      parameters:
+      - description: ProductImage ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ProductImageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить изображение товара по ID
+      tags:
+      - ProductImage
+    patch:
+      consumes:
+      - application/json
+      description: Обновляет указанные поля изображения товара по ID (PATCH)
+      parameters:
+      - description: ProductImage ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля изображения товара
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.ProductImagePatch'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ProductImageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Частично обновить изображение товара
+      tags:
+      - ProductImage
+    put:
+      consumes:
+      - application/json
+      description: Обновляет все поля изображения товара по ID (PUT)
+      parameters:
+      - description: ProductImage ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля изображения товара
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.ProductImageUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ProductImageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Полностью обновить изображение товара
+      tags:
+      - ProductImage
+  /product-warehouses:
+    get:
+      description: Возвращает список всех записей склада с пагинацией
+      parameters:
+      - default: 1
+        description: Номер страницы
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Лимит на страницу
+        in: query
+        name: limit
+        type: integer
+      - description: Фильтр по товару
+        in: query
+        name: product_id
+        type: integer
+      - description: Минимальное количество на складе
+        in: query
+        name: min_count
+        type: integer
+      - description: Максимальное количество на складе
+        in: query
+        name: max_count
+        type: integer
+      - default: false
+        description: Только товары с низким запасом (< 10)
+        in: query
+        name: low_stock
+        type: boolean
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ProductWarehouseListResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить список записей склада
+      tags:
+      - ProductWarehouse
+    post:
+      consumes:
+      - application/json
+      description: Создает новую запись склада для товара
+      parameters:
+      - description: Данные для создания записи склада
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.ProductWarehouseCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.ProductWarehouseResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Создать запись склада
+      tags:
+      - ProductWarehouse
+  /product-warehouses/{id}:
+    delete:
+      description: Удаляет запись склада из БД по ID
+      parameters:
+      - description: ProductWarehouse ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: Запись склада успешно удалена
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Удалить запись склада
+      tags:
+      - ProductWarehouse
+    get:
+      description: Возвращает запись склада по ID
+      parameters:
+      - description: ProductWarehouse ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ProductWarehouseResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить запись склада по ID
+      tags:
+      - ProductWarehouse
+    patch:
+      consumes:
+      - application/json
+      description: Обновляет указанные поля записи склада по ID (PATCH)
+      parameters:
+      - description: ProductWarehouse ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля записи склада
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.ProductWarehousePatch'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ProductWarehouseResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Частично обновить запись склада
+      tags:
+      - ProductWarehouse
+    put:
+      consumes:
+      - application/json
+      description: Обновляет все поля записи склада по ID (PUT)
+      parameters:
+      - description: ProductWarehouse ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля записи склада
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.ProductWarehouseUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ProductWarehouseResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Полностью обновить запись склада
+      tags:
+      - ProductWarehouse
+  /product-warehouses/{id}/restock:
+    post:
+      consumes:
+      - application/json
+      description: Добавляет указанное количество товара на склад
+      parameters:
+      - description: ProductWarehouse ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Количество для пополнения
+        in: body
+        minimum: 1
+        name: quantity
+        required: true
+        schema:
+          type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ProductWarehouseResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Пополнить склад
+      tags:
+      - ProductWarehouse
+  /product-warehouses/product/{product_id}:
+    get:
+      description: Возвращает запись склада по ID товара
+      parameters:
+      - description: Product ID
+        in: path
+        name: product_id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ProductWarehouseResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить запись склада по ID товара
+      tags:
+      - ProductWarehouse
+  /products:
+    get:
+      description: Возвращает список всех товаров с пагинацией и фильтрацией
+      parameters:
+      - default: 1
+        description: Номер страницы
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Лимит на страницу
+        in: query
+        name: limit
+        type: integer
+      - description: Поиск по названию или slug
+        in: query
+        name: search
+        type: string
+      - description: Фильтр по категории
+        in: query
+        name: category_id
+        type: integer
+      - description: Фильтр по производителю
+        in: query
+        name: manufacturer_id
+        type: integer
+      - description: Минимальная цена
+        in: query
+        name: min_price
+        type: number
+      - description: Максимальная цена
+        in: query
+        name: max_price
+        type: number
+      - default: false
+        description: Только со скидкой
+        in: query
+        name: with_discount
+        type: boolean
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ProductListResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить список товаров
+      tags:
+      - Product
+    post:
+      consumes:
+      - application/json
+      description: Создает новый товар
+      parameters:
+      - description: Данные для создания товара
         in: body
         name: data
         required: true
@@ -223,16 +5221,24 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.ErrorResponse'
-      summary: Создать продукт
+      summary: Создать товар
       tags:
-      - Products
+      - Product
   /products/{id}:
     delete:
-      description: Удаляет продукт из БД по ID
+      description: Удаляет товар из БД по ID
       parameters:
       - description: Product ID
         in: path
@@ -241,16 +5247,28 @@ paths:
         type: integer
       responses:
         "204":
-          description: Продукт успешно удалён
+          description: Товар успешно удален
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
         "404":
           description: Not Found
           schema:
             $ref: '#/definitions/response.ErrorResponse'
-      summary: Удалить продукт
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Удалить товар
       tags:
-      - Products
+      - Product
     get:
-      description: Возвращает продукт по ID
+      description: Возвращает товар по ID со всей информацией
       parameters:
       - description: Product ID
         in: path
@@ -262,24 +5280,70 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/response.ProductResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
         "404":
           description: Not Found
           schema:
             $ref: '#/definitions/response.ErrorResponse'
-      summary: Получить продукт по ID
+      summary: Получить товар по ID
       tags:
-      - Products
-    put:
+      - Product
+    patch:
       consumes:
       - application/json
-      description: Обновляет существующий продукт по ID
+      description: Обновляет указанные поля товара по ID (PATCH)
       parameters:
       - description: Product ID
         in: path
         name: id
         required: true
         type: integer
-      - description: Обновляемые поля продукта
+      - description: Обновляемые поля товара
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.ProductPatch'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ProductResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Частично обновить товар
+      tags:
+      - Product
+    put:
+      consumes:
+      - application/json
+      description: Обновляет все поля товара по ID (PUT)
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля товара
         in: body
         name: data
         required: true
@@ -300,11 +5364,1725 @@ paths:
           description: Not Found
           schema:
             $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.ErrorResponse'
-      summary: Обновить продукт
+      summary: Полностью обновить товар
       tags:
-      - Products
+      - Product
+  /products/slug/{slug}:
+    get:
+      description: Возвращает товар по slug со всей информацией
+      parameters:
+      - description: Product Slug
+        in: path
+        name: slug
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ProductResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить товар по slug
+      tags:
+      - Product
+  /request-statuses:
+    get:
+      description: Возвращает список всех статусов заявок
+      parameters:
+      - default: 1
+        description: Номер страницы
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Лимит на страницу
+        in: query
+        name: limit
+        type: integer
+      - description: Поиск по названию
+        in: query
+        name: search
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RequestStatusListResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить список статусов заявок
+      tags:
+      - RequestStatus
+    post:
+      consumes:
+      - application/json
+      description: Создает новый статус заявки
+      parameters:
+      - description: Данные для создания статуса заявки
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.RequestStatusCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.RequestStatusResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Создать статус заявки
+      tags:
+      - RequestStatus
+  /request-statuses/{id}:
+    delete:
+      description: Удаляет статус заявки из БД по ID
+      parameters:
+      - description: RequestStatus ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: Статус заявки успешно удалён
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Удалить статус заявки
+      tags:
+      - RequestStatus
+    get:
+      description: Возвращает статус заявки по ID
+      parameters:
+      - description: RequestStatus ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RequestStatusResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить статус заявки по ID
+      tags:
+      - RequestStatus
+    patch:
+      consumes:
+      - application/json
+      description: Обновляет указанные поля статуса заявки по ID (PATCH)
+      parameters:
+      - description: RequestStatus ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля статуса заявки
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.RequestStatusPatch'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RequestStatusResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Частично обновить статус заявки
+      tags:
+      - RequestStatus
+    put:
+      consumes:
+      - application/json
+      description: Обновляет все поля статуса заявки по ID (PUT)
+      parameters:
+      - description: RequestStatus ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля статуса заявки
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.RequestStatusUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RequestStatusResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Полностью обновить статус заявки
+      tags:
+      - RequestStatus
+  /requests:
+    get:
+      description: Возвращает список всех заявок
+      parameters:
+      - default: 1
+        description: Номер страницы
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Лимит на страницу
+        in: query
+        name: limit
+        type: integer
+      - description: Поиск по номеру
+        in: query
+        name: number
+        type: string
+      - description: Фильтр по заказу
+        in: query
+        name: order_id
+        type: integer
+      - description: Фильтр по пользователю
+        in: query
+        name: user_id
+        type: integer
+      - description: Фильтр по статусу заявки
+        in: query
+        name: request_status_id
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RequestListResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить список заявок
+      tags:
+      - Request
+    post:
+      consumes:
+      - application/json
+      description: Создает новую заявку
+      parameters:
+      - description: Данные для создания заявки
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.RequestCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.RequestResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Создать заявку
+      tags:
+      - Request
+  /requests/{id}:
+    delete:
+      description: Удаляет заявку из БД по ID
+      parameters:
+      - description: Request ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: Заявка успешно удалена
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Удалить заявку
+      tags:
+      - Request
+    get:
+      description: Возвращает заявку по ID
+      parameters:
+      - description: Request ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RequestResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить заявку по ID
+      tags:
+      - Request
+    patch:
+      consumes:
+      - application/json
+      description: Обновляет указанные поля заявки по ID (PATCH)
+      parameters:
+      - description: Request ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля заявки
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.RequestPatch'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RequestResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Частично обновить заявку
+      tags:
+      - Request
+    put:
+      consumes:
+      - application/json
+      description: Обновляет все поля заявки по ID (PUT)
+      parameters:
+      - description: Request ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля заявки
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.RequestUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RequestResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Полностью обновить заявку
+      tags:
+      - Request
+  /rights:
+    get:
+      description: Возвращает список всех прав
+      parameters:
+      - default: 1
+        description: Номер страницы
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Лимит на страницу
+        in: query
+        name: limit
+        type: integer
+      - description: Поиск по названию
+        in: query
+        name: search
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RightListResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить список прав
+      tags:
+      - Right
+    post:
+      consumes:
+      - application/json
+      description: Создает новое право
+      parameters:
+      - description: Данные для создания права
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.RightCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.RightResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Создать право
+      tags:
+      - Right
+  /rights/{id}:
+    delete:
+      description: Удаляет право из БД по ID
+      parameters:
+      - description: Right ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: Право успешно удалено
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Удалить право
+      tags:
+      - Right
+    get:
+      description: Возвращает право по ID
+      parameters:
+      - description: Right ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RightResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить право по ID
+      tags:
+      - Right
+    patch:
+      consumes:
+      - application/json
+      description: Обновляет указанные поля права по ID (PATCH)
+      parameters:
+      - description: Right ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля права
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.RightPatch'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RightResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Частично обновить право
+      tags:
+      - Right
+    put:
+      consumes:
+      - application/json
+      description: Обновляет все поля права по ID (PUT)
+      parameters:
+      - description: Right ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля права
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.RightUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RightResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Полностью обновить право
+      tags:
+      - Right
+  /shipment-methods:
+    get:
+      description: Возвращает список всех способов доставки
+      parameters:
+      - default: 1
+        description: Номер страницы
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Лимит на страницу
+        in: query
+        name: limit
+        type: integer
+      - description: Поиск по названию
+        in: query
+        name: search
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ShipmentMethodListResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить список способов доставки
+      tags:
+      - ShipmentMethod
+    post:
+      consumes:
+      - application/json
+      description: Создает новый способ доставки
+      parameters:
+      - description: Данные для создания способа доставки
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.ShipmentMethodCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.ShipmentMethodResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Создать способ доставки
+      tags:
+      - ShipmentMethod
+  /shipment-methods/{id}:
+    delete:
+      description: Удаляет способ доставки из БД по ID
+      parameters:
+      - description: ShipmentMethod ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: Способ доставки успешно удалён
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Удалить способ доставки
+      tags:
+      - ShipmentMethod
+    get:
+      description: Возвращает способ доставки по ID
+      parameters:
+      - description: ShipmentMethod ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ShipmentMethodResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить способ доставки по ID
+      tags:
+      - ShipmentMethod
+    patch:
+      consumes:
+      - application/json
+      description: Обновляет указанные поля способа доставки по ID (PATCH)
+      parameters:
+      - description: ShipmentMethod ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля способа доставки
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.ShipmentMethodPatch'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ShipmentMethodResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Частично обновить способ доставки
+      tags:
+      - ShipmentMethod
+    put:
+      consumes:
+      - application/json
+      description: Обновляет все поля способа доставки по ID (PUT)
+      parameters:
+      - description: ShipmentMethod ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля способа доставки
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.ShipmentMethodUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ShipmentMethodResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Полностью обновить способ доставки
+      tags:
+      - ShipmentMethod
+  /shipment-statuses:
+    get:
+      description: Возвращает список всех статусов доставки с пагинацией
+      parameters:
+      - default: 1
+        description: Номер страницы
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Лимит на страницу
+        in: query
+        name: limit
+        type: integer
+      - description: Поиск по названию
+        in: query
+        name: search
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ShipmentStatusListResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить список статусов доставки
+      tags:
+      - ShipmentStatus
+    post:
+      consumes:
+      - application/json
+      description: Создает новый статус доставки в системе
+      parameters:
+      - description: Данные для создания статуса доставки
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.ShipmentStatusCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.ShipmentStatusResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Создать статус доставки
+      tags:
+      - ShipmentStatus
+  /shipment-statuses/{id}:
+    delete:
+      description: Удаляет статус доставки из БД по ID
+      parameters:
+      - description: ShipmentStatus ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: Статус доставки успешно удалён
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Удалить статус доставки
+      tags:
+      - ShipmentStatus
+    get:
+      description: Возвращает статус доставки по ID
+      parameters:
+      - description: ShipmentStatus ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ShipmentStatusResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить статус доставки по ID
+      tags:
+      - ShipmentStatus
+    patch:
+      consumes:
+      - application/json
+      description: Обновляет указанные поля статуса доставки по ID (PATCH)
+      parameters:
+      - description: ShipmentStatus ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля статуса доставки
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.ShipmentStatusPatch'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ShipmentStatusResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Частично обновить статус доставки
+      tags:
+      - ShipmentStatus
+    put:
+      consumes:
+      - application/json
+      description: Обновляет все поля статуса доставки по ID (PUT)
+      parameters:
+      - description: ShipmentStatus ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля статуса доставки
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.ShipmentStatusUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ShipmentStatusResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Полностью обновить статус доставки
+      tags:
+      - ShipmentStatus
+  /shipments:
+    get:
+      description: Возвращает список всех доставок
+      parameters:
+      - default: 1
+        description: Номер страницы
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Лимит на страницу
+        in: query
+        name: limit
+        type: integer
+      - description: Поиск по номеру
+        in: query
+        name: number
+        type: string
+      - description: Фильтр по способу доставки
+        in: query
+        name: shipment_method_id
+        type: integer
+      - description: Фильтр по статусу доставки
+        in: query
+        name: shipment_status_id
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ShipmentListResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить список доставок
+      tags:
+      - Shipment
+    post:
+      consumes:
+      - application/json
+      description: Создает новую доставку
+      parameters:
+      - description: Данные для создания доставки
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.ShipmentCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.ShipmentResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Создать доставку
+      tags:
+      - Shipment
+  /shipments/{id}:
+    delete:
+      description: Удаляет доставку из БД по ID
+      parameters:
+      - description: Shipment ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: Доставка успешно удалена
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Удалить доставку
+      tags:
+      - Shipment
+    get:
+      description: Возвращает доставку по ID
+      parameters:
+      - description: Shipment ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ShipmentResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить доставку по ID
+      tags:
+      - Shipment
+    patch:
+      consumes:
+      - application/json
+      description: Обновляет указанные поля доставки по ID (PATCH)
+      parameters:
+      - description: Shipment ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля доставки
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.ShipmentPatch'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ShipmentResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Частично обновить доставку
+      tags:
+      - Shipment
+    put:
+      consumes:
+      - application/json
+      description: Обновляет все поля доставки по ID (PUT)
+      parameters:
+      - description: Shipment ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля доставки
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.ShipmentUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ShipmentResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Полностью обновить доставку
+      tags:
+      - Shipment
+  /stories:
+    get:
+      description: Возвращает список всех историй с пагинацией
+      parameters:
+      - default: 1
+        description: Номер страницы
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Лимит на страницу
+        in: query
+        name: limit
+        type: integer
+      - description: Поиск по названию
+        in: query
+        name: search
+        type: string
+      - default: true
+        description: Фильтр по отображению
+        in: query
+        name: is_show
+        type: boolean
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.StoryListResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить список историй
+      tags:
+      - Story
+    post:
+      consumes:
+      - application/json
+      description: Создает новую историю
+      parameters:
+      - description: Данные для создания истории
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.StoryCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.StoryResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Создать историю
+      tags:
+      - Story
+  /stories/{id}:
+    delete:
+      description: Удаляет историю из БД по ID
+      parameters:
+      - description: Story ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: История успешно удалена
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Удалить историю
+      tags:
+      - Story
+    get:
+      description: Возвращает историю по ID
+      parameters:
+      - description: Story ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.StoryResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить историю по ID
+      tags:
+      - Story
+    patch:
+      consumes:
+      - application/json
+      description: Обновляет указанные поля истории по ID (PATCH)
+      parameters:
+      - description: Story ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля истории
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.StoryPatch'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.StoryResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Частично обновить историю
+      tags:
+      - Story
+    put:
+      consumes:
+      - application/json
+      description: Обновляет все поля истории по ID (PUT)
+      parameters:
+      - description: Story ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля истории
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.StoryUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.StoryResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Полностью обновить историю
+      tags:
+      - Story
+  /stories/{id}/toggle-visibility:
+    patch:
+      description: Переключает видимость истории (is_show)
+      parameters:
+      - description: Story ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.StoryResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Переключить видимость истории
+      tags:
+      - Story
+  /users:
+    get:
+      description: Возвращает список всех пользователей
+      parameters:
+      - default: 1
+        description: Номер страницы
+        in: query
+        name: page
+        type: integer
+      - default: 20
+        description: Лимит на страницу
+        in: query
+        name: limit
+        type: integer
+      - description: Поиск по email или username
+        in: query
+        name: search
+        type: string
+      - description: Фильтр по правам
+        in: query
+        name: right_id
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.UserListResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить список пользователей
+      tags:
+      - User
+    post:
+      consumes:
+      - application/json
+      description: Создает нового пользователя
+      parameters:
+      - description: Данные для создания пользователя
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.UserCreate'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/response.UserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Создать пользователя
+      tags:
+      - User
+  /users/{id}:
+    delete:
+      description: Удаляет пользователя из БД по ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: Пользователь успешно удален
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Удалить пользователя
+      tags:
+      - User
+    get:
+      description: Возвращает пользователя по ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.UserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Получить пользователя по ID
+      tags:
+      - User
+    patch:
+      consumes:
+      - application/json
+      description: Обновляет указанные поля пользователя по ID (PATCH)
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля пользователя
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.UserPatch'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.UserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Частично обновить пользователя
+      tags:
+      - User
+    put:
+      consumes:
+      - application/json
+      description: Обновляет все поля пользователя по ID (PUT)
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Обновляемые поля пользователя
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.UserUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.UserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Полностью обновить пользователя
+      tags:
+      - User
+  /users/{id}/password:
+    put:
+      consumes:
+      - application/json
+      description: Обновляет пароль пользователя
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Данные для обновления пароля
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/response.UserPasswordUpdate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Обновить пароль пользователя
+      tags:
+      - User
 swagger: "2.0"
